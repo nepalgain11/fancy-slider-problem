@@ -25,7 +25,7 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-
+  toggleSpinner()
 }
 
 const getImages = (query) => {
@@ -38,7 +38,7 @@ const getImages = (query) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
+  element.classList.toggle('added');
   
  
   let item = sliders.indexOf(img);
@@ -101,6 +101,15 @@ const changeItem = index => {
   changeSlide(slideIndex += index);
 }
 
+// enter search  button part
+
+var searchButton = document.querySelector(".search-button");
+ document.querySelector(".input-button").addEventListener("keypress", function(event) {
+  if (event.keyCode == 13)
+  searchButton.click();
+  
+});
+
 // change slide item
 const changeSlide = (index) => {
 
@@ -119,7 +128,8 @@ const changeSlide = (index) => {
     item.style.display = "none"
   })
 
-  items[index].style.display = "block"
+  items[index].style.display = "block";
+  //toggleSpinner(false);
 }
 
 searchBtn.addEventListener('click', function () {
@@ -128,8 +138,35 @@ searchBtn.addEventListener('click', function () {
   const search = document.getElementById('search');
   getImages(search.value)
   sliders.length = 0;
+  toggleSpinner();
 })
 
 sliderBtn.addEventListener('click', function () {
   createSlider();
 })
+
+
+
+
+
+
+const toggleSpinner = () => {
+  let spinner = document.getElementById("spinner");
+  spinner.classList.toggle("d-none");
+  //spinner.classList.remove("d-none");
+
+  // if(show){
+  //   spinner.classList.remove("d-none");
+  // }
+  
+  // else{
+  //   spinner.classList.add("d-none");
+  // }
+}
+
+
+
+
+
+
+
