@@ -28,11 +28,12 @@ const showImages = (images) => {
   toggleSpinner()
 }
 
+
+
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
-    .catch(err => console.log(err))
 }
 
 let slideIndex = 0;
@@ -45,10 +46,10 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   }
+  else{
+    sliders.splice(item, 1);
+  }
 
-  // else {
-  //   alert('Hey, Already added !')
-  // }
 }
 var timer;
 const createSlider = () => {
@@ -71,7 +72,7 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
  
-  //let  durationTime = document.getElementById('duration').value || 1000;
+  
   let durationTime = document.getElementById('duration').value;
    if( durationTime >= 0 ){
     
@@ -123,20 +124,18 @@ const changeSlide = (index) => {
     index = 0;
     slideIndex = 0;
   }
-
   items.forEach(item => {
     item.style.display = "none"
   })
-
   items[index].style.display = "block";
-  //toggleSpinner(false);
+ 
 }
 
 searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
-  const search = document.getElementById('search');
-  getImages(search.value)
+  let search = document.getElementById('search');
+  getImages(search.value);
   sliders.length = 0;
   toggleSpinner();
 })
@@ -150,21 +149,21 @@ sliderBtn.addEventListener('click', function () {
 
 
 
+// bonus part
+
 const toggleSpinner = () => {
   let spinner = document.getElementById("spinner");
   spinner.classList.toggle("d-none");
-  //spinner.classList.remove("d-none");
 
-  // if(show){
-  //   spinner.classList.remove("d-none");
-  // }
-  
-  // else{
-  //   spinner.classList.add("d-none");
-  // }
 }
 
 
+
+document.querySelector(".back-page").addEventListener("click", function(){
+  document.querySelector(".main").style.display = "none";
+  document.querySelector(".images").style.display = "block";
+  clearInterval(timer);
+});
 
 
 
